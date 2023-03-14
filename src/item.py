@@ -1,5 +1,6 @@
 import csv
 
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -32,8 +33,8 @@ class Item:
             raise Exception("Длина наименования товара превышает 10 символов")
 
     @classmethod
-    def instantiate_from_csv(cls):
-        with open('../src/items.csv', "r", newline='', encoding='windows-1251') as csvfile:
+    def instantiate_from_csv(cls, path="../src/items.csv"):
+        with open(path, "r", newline='', encoding='windows-1251') as csvfile:
             reader = csv.DictReader(csvfile, delimiter=',')
             for row in reader:
                 cls.all.append(row)
