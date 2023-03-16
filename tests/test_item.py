@@ -8,8 +8,16 @@ def item1():
     return Item("Планшет", 25000, 5)
 
 
+def test_repr(item1):
+    assert repr(item1) == "Item('Планшет', 25000, 5)"
+
+
+def test_str(item1):
+    assert str(item1)[2] == 'а'
+
+
 def test_item_from_csv():
-    Item.instantiate_from_csv(path="./src/items.csv")
+    Item.instantiate_from_csv(path="../src/items.csv")
     assert Item.all.pop()["name"] == 'Клавиатура'
 
 
