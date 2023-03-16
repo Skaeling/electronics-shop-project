@@ -21,12 +21,20 @@ class Item:
         self.quantity = quantity
         Item.all.append(self)
 
+    def __repr__(self):
+        """Возвращает инфо об экземпляре в формате: Item('Смартфон', 10000, 20)"""
+        return f"{self.__class__.__name__}('{self.name}', {self.price}, {self.quantity})"
+
+    def __str__(self):
+        return f'{self.name}'
+
     @property
     def name(self):
         return self.__name
 
     @name.setter
     def name(self, value):
+        """Проверяет, что длина наименования товара не больше 10 символов"""
         if len(value) < 10:
             self.__name = value
         else:
@@ -34,6 +42,7 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls, path="../src/items.csv"):
+        """Класс-метод, инициализирующий экземпляры класса `Item` данными из файла _src/items.csv_"""
         with open(path, "r", newline='', encoding='windows-1251') as csvfile:
             reader = csv.DictReader(csvfile, delimiter=',')
             for row in reader:
@@ -41,6 +50,7 @@ class Item:
 
     @staticmethod
     def string_to_number(number: str):
+        """Статический метод, возвращающий число из числа-строки"""
         for n in number:
             if n.isdigit():
                 return int(n)
