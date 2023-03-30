@@ -12,5 +12,7 @@ def test_init(key):
 
 
 def test_change_lang(key):
-    assert key.change_lang().language == "RU"
-    assert key.change_lang().language == "EN"
+    key.change_lang()
+    assert str(key.language) == "RU"
+    key.change_lang()
+    assert str(key.language) == "EN"

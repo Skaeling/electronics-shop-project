@@ -3,26 +3,27 @@ from src.item import Item
 
 class Language:
     """Класс-миксин для хранения и изменения языка раскладки клавиатуры"""
-    def __init__(self, name, price, quantity, language="EN"):
-        self.name = name
-        self.price = price
-        self.quantity = quantity
-        self.__language = language
+    __language = "EN"
+
+    def __init__(self):
+        pass
 
     @property
     def language(self):
         return self.__language
 
-    def change_lang(self):
+    @classmethod
+    def change_lang(cls):
         """Меняет язык с английского на русский или обратно, возвращает экземпляр класса"""
-        if self.__language == "EN":
-            self.__language = "RU"
-            return self
-        elif self.__language == "RU":
-            self.__language = "EN"
-            return self
+        if cls.__language == "EN":
+            cls.__language = "RU"
+            return cls
+        elif cls.__language == "RU":
+            cls.__language = "EN"
+            return cls
 
 
-class Keyboard(Language, Item):
-    def __init__(self, name, price, quantity):
+class Keyboard(Item, Language):
+    def __init__(self, name, price, quantity, language=None):
         super().__init__(name, price, quantity)
+        self.__language = language
