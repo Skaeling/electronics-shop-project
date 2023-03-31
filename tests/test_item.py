@@ -1,5 +1,6 @@
 import pytest
 from src.item import Item
+from src.instantiate_csv_error import InstantiateCSVError
 
 
 @pytest.fixture()
@@ -21,8 +22,14 @@ def test_str(item1):
 
 
 def test_item_from_csv():
-    Item.instantiate_from_csv(path="../src/items.csv")
+    Item.instantiate_from_csv(path="../src/items2.csv")  # неповрежденный файл
     assert Item.all.pop()["name"] == 'Клавиатура'
+
+    with pytest.raises(InstantiateCSVError, match="Файл item.csv поврежден"):  # поврежденный файл
+        Item.instantiate_from_csv(path="../src/items.csv")
+
+    with pytest.raises(FileNotFoundError):  # нет такого файла
+        Item.instantiate_from_csv(path="../src/BADWAY.csv")
 
 
 def test_item_string_to_number():

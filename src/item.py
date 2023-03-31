@@ -1,4 +1,4 @@
-import csv
+from src.instantiate_csv_error import CSVcheck
 
 
 class Item:
@@ -41,7 +41,7 @@ class Item:
     @name.setter
     def name(self, value):
         """Проверяет, что длина наименования товара не больше 10 символов"""
-        if len(value) < 20:
+        if len(value) < 10:
             self.__name = value
         else:
             raise Exception("Длина наименования товара превышает 10 символов")
@@ -49,10 +49,12 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls, path="../src/items.csv"):
         """Класс-метод, инициализирующий экземпляры класса `Item` данными из файла _src/items.csv_"""
-        with open(path, "r", newline='', encoding='windows-1251') as csvfile:
-            reader = csv.DictReader(csvfile, delimiter=',')
-            for row in reader:
-                cls.all.append(row)
+        try:
+            data = CSVcheck().open_file(path)
+        except FileNotFoundError:
+            raise FileNotFoundError("Отсутствует файл item.csv")
+        else:
+            cls.all = data
 
     @staticmethod
     def string_to_number(number: str):
